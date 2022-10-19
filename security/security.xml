@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record model="ir.module.category" id="module_category_silksoft_dashboard">
+            <field name="name">SilkSoft Dashboards</field>
+            <field name="description">SilkSoft's Dashboard for Employees and Managers.</field>
+            <field name="sequence">17</field>
+        </record>
+
+        <record id="group_dashboard_user_view" model="res.groups">
+            <field name="name">User</field>
+            <field name="category_id" ref="silksoft_dashboards.module_category_silksoft_dashboard"/>
+        </record>
+
+        <record id="group_dashboard_manager_view" model="res.groups">
+            <field name="name">Manager</field>
+            <field name="category_id" ref="silksoft_dashboards.module_category_silksoft_dashboard"/>
+        </record>
+
+        <record id="group_dashboard_superuser_view" model="res.groups">
+            <field name="name">Super User</field>
+            <field name="category_id" ref="silksoft_dashboards.module_category_silksoft_dashboard"/>
+            <field name="implied_ids" eval="[(4, ref('silksoft_dashboards.group_dashboard_manager_view')), (4, ref('silksoft_dashboards.group_dashboard_user_view'))]" />
+            <field name="users" eval="[(4, ref('base.group_system'))]" />
+        </record>
+    </data>
+</odoo>
