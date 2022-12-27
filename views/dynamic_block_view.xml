@@ -20,24 +20,52 @@
                             <field name="edit_mode" invisible="1"/>
                             <field name="operation" attrs="{'required':[('edit_mode','=', True)]}"/>
                             <field name="measured_field" domain="[('model_id','=',model_id), ('ttype','in',['float','integer','monetary']), ('store', '=', True)]" attrs="{'required':[('edit_mode','=', True)]}"/>
-                            <field name="filter" widget="domain" options="{'model': 'model_name'}"/>
                         </group>
                     </group>
-                    <group string="Block Information">
-                        <group>
-                            <field name="sequence" invisible="1"/>
-                            <field name="type" required="1"/>
-                            <field name="graph_type" attrs="{'invisible': [('type','not in', 'graph')]}"/>
-                            <field name="graph_size" attrs="{'invisible': [('type','not in', 'graph')]}"/>
-                            <field name="fa_icon" attrs="{'invisible': [('type','not in', 'tile')]}"/>
-                            <field name="group_by" attrs="{'invisible': [('type','not in', 'graph')], 'required':[('edit_mode','=', True),('type','=','graph')]}"
-                                   domain="[('model_id','=',model_id), ('ttype','!=','one2many'), ('store', '=', True)]"/>
-                            <field name="tile_color" attrs="{'invisible': [('type','not in', 'tile')]}"
-                                   widget="color"/>
-                            <field name="text_color" attrs="{'invisible': [('type','not in', 'tile')]}"
-                                   widget="color"/>
-                        </group>
-                    </group>
+                    <notebook>
+                        <page string="Block Settings">
+                            <group string="Block Information">
+                                <group>
+                                    <field name="sequence" invisible="1"/>
+                                    <field name="type" required="1"/>
+                                    <field name="graph_type" attrs="{'invisible': [('type','not in', 'graph')]}"/>
+                                    <field name="graph_size" attrs="{'invisible': [('type','not in', 'graph')]}"/>
+                                    <field name="fa_icon" attrs="{'invisible': [('type','not in', 'tile')]}"/>
+                                    <field name="group_by" attrs="{'invisible': [('type','not in', 'graph')], 'required':[('edit_mode','=', True),('type','=','graph')]}"
+                                           domain="[('model_id','=',model_id), ('ttype','!=','one2many'), ('store', '=', True)]"/>
+                                    <field name="tile_color" attrs="{'invisible': [('type','not in', 'tile')]}"
+                                           widget="color"/>
+                                    <field name="text_color" attrs="{'invisible': [('type','not in', 'tile')]}"
+                                           widget="color"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Filter Settings">
+                            <group string="Filter Configuration">
+                                <group>
+                                    <field name="filter" widget="domain" options="{'model': 'model_name'}"/>
+                                    <separator colspan="4"/>
+                                    <field name="filter_by_employee"/>
+                                    <field name="employee_field_id" domain="[('model_id','=',model_id), ('ttype','=', ['one2many','many2one']), ('store', '=', True), ('relation', '=', 'hr.employee')]" attrs="{'invisible':[('filter_by_employee', '==', False)], 'required':['&amp;' ,('edit_mode','=', True), ('filter_by_employee','=', True)]}"/>
+                                </group>
+                                <group>
+                                    <field name="filter_monthly"/>
+                                    <field name="across_months" attrs="{'invisible':[('filter_monthly', '==', False)]}"/>
+                                    <field name="from_day_monthly" attrs="{'invisible':[('filter_monthly', '==', False)], 'required':['&amp;' ,('edit_mode','=', True), ('filter_monthly','=', True)]}"/>
+                                    <field name="to_day_monthly" attrs="{'invisible':[('filter_monthly', '==', False)], 'required':['&amp;' ,('edit_mode','=', True), ('filter_monthly','=', True)]}"/>
+                                </group>
+                                <group>
+                                    <separator colspan="4"/>
+                                    <field name="filter_by_user"/>
+                                    <field name="user_field_id" domain="[('model_id','=',model_id), ('ttype','=', ['one2many','many2one']), ('store', '=', True), ('relation', '=', 'res.users')]" attrs="{'invisible':[('filter_by_user', '==', False)], 'required':['&amp;' ,('edit_mode','=', True), ('filter_by_user','=', True)]}"/>
+                                </group>
+                                <group>
+                                    <field name="is_python_code"/>
+                                    <field colspan="8" name="python_code" attrs="{'invisible':[('is_python_code', '=', False)], 'required':[('is_python_code','=', True)]}"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>
